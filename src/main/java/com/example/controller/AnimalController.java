@@ -55,14 +55,14 @@ public class AnimalController {
             return "redirect:/animal/" + animal.getCategory() + "/" + animal.getId();
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("{category}/{id}/edit")
     public String editAnimal(@PathVariable Long id, Model model) {
         model.addAttribute("animal", animalRepository.getAnimalById(id));
         model.addAttribute("categoryList", categoryRepository.getAll());
         return "editAnimalForm";
     }
 
-    @PostMapping("/{id}/edit")
+    @PostMapping("{category}/{id}/edit")
     public String editOldAnimal(@ModelAttribute Animal animal, @PathVariable Long id) {
         animal.setId(id);
         animalRepository.changeAnimal(animal);

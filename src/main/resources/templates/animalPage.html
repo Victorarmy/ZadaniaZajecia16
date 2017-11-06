@@ -11,7 +11,7 @@
 <div class="row" style="padding: 20px">
 	<div class="col-sm-1">
 		<h6><a th:href="@{/}" th:text="'Powrót do listy'"></a>
-		<a th:href="@{/animal/{id}/edit(id=${animal.id})}" th:text="${'Edytuj zwierzaka'}"> </a></h6>
+		<a th:href="@{/animal/{category}/{id}/edit(id=${animal.id}, category=${animal.category})}" th:text="${'Edytuj zwierzaka'}"> </a></h6>
 	</div>
 </div>
 

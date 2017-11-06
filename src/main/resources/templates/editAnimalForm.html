@@ -11,7 +11,7 @@
 <h6><a th:href="@{/}" th:text="'Powrót do listy'"></a></h6>
 <h4>Edytuj zwierzaka</h4>
 
-<form method="post" th:action="@{/animal/{id}/edit(id={animal.id})}"
+<form method="post" th:action="@{/animal/{id}/edit(id=${animal.id})}"
       th:object="${animal}">
 
 	<input type="text" th:value="${animal.name}" name="name" th:field="*{name}"/><br/>
