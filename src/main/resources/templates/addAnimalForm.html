@@ -10,13 +10,14 @@
 </div>
 	<h6><a th:href="@{/}" th:text="'Powrót do listy'"></a></h6>
 
+	<h2 style="background: red" th:if="${message}" th:text="${message}"></h2>
 	<h4>Dodaj zwierzaka do adopcji</h4>
 
 	<form method="post" th:action="@{/animal/addAnimal}"
 	                    th:object="${animal}">
 		<input type="text" placeholder="Imie" name="name" th:field="*{name}"/><br/>
 		<textarea placeholder="Opis" name="description" th:field="*{description}"/><br/>
-		<select th:field="*{category}">
+		<select required="required" th:field="*{category}">
 			<option selected="selected" value="">Wybierz</option>
 			<option th:each="category: ${categoryList}"
 			        th:value="${category}"

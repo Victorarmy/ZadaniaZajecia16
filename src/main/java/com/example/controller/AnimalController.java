@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,15 +45,14 @@ public class AnimalController {
     }
 
     @PostMapping("/addAnimal")
-    public String addNewAnimal(@ModelAttribute Animal animal) {
+    public String addNewAnimal(@ModelAttribute Animal animal, RedirectAttributes redirectAttributes) {
         boolean contains = animalRepository.checkIfContains(animal);
-        System.out.println(contains);
-        if (!contains) {
-            System.out.println("Wszedlem");
-            animalRepository.addNewAnimalAndSetId(animal);
+        if (contains) {
+            redirectAttributes.addFlashAttribute("message", "Taki zwierzak już istnieje w naszej bazie!");
+            return "redirect:/animal/addAnimal";
         }
-        System.out.println(animal);
-        return "redirect:/animal/" + animal.getCategory() + "/" + animal.getId();
+            animalRepository.addNewAnimalAndSetId(animal);
+            return "redirect:/animal/" + animal.getCategory() + "/" + animal.getId();
     }
 
     @GetMapping("/{id}/edit")
