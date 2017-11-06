@@ -72,10 +72,12 @@ public class AnimalController {
     @GetMapping("/{category}")
     public String animalsByCategory(@RequestParam(required = false) String sort, @PathVariable String category, Model model) {
         List<Animal> filteredAnimals = filterService.filterAnimalsByCategory(category);
+
         if (sort != null) {
             Comparator<Animal> comparator = SortTypes.getComparator(sort);
             Collections.sort(filteredAnimals, comparator);
         }
+
         model.addAttribute("animals", filteredAnimals);
         model.addAttribute("categories", categoryRepository.getAll());
         model.addAttribute("chosenCategory", category);

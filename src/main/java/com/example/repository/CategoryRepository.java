@@ -20,4 +20,8 @@ public class CategoryRepository {
     public List<String> getAll() {
         return categories;
     }
+
+    public void addNewCategory(String name) {
+        categories.add(name);
+    }
 }
