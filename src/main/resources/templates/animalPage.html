@@ -8,7 +8,13 @@
 <div style="background: #cccc44; padding: 20px;" >
 	<h1>Schronisko Reksio i Klakier</h1>
 </div>
-<h6><a th:href="@{/}" th:text="'Powrót do listy'"></a></h6>
+<div class="row" style="padding: 20px">
+	<div class="col-sm-1">
+		<h6><a th:href="@{/}" th:text="'Powrót do listy'"></a>
+		<a th:href="@{/animal/{id}/edit(id=${animal.id})}" th:text="${'Edytuj zwierzaka'}"> </a></h6>
+	</div>
+</div>
+
 
 <h2 th:text="${animal.name}"/>
 

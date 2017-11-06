@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.model.Animal;
+import com.example.model.SortTypes;
 import com.example.repository.AnimalRepository;
 import com.example.repository.CategoryRepository;
 import com.example.service.FilterService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -19,25 +22,23 @@ public class HomeController {
 
     private AnimalRepository animalRepository;
     private CategoryRepository categoryRepository;
-    private FilterService filterService;
 
     @Autowired
-    public HomeController(AnimalRepository animalRepository, CategoryRepository categoryRepository, FilterService filterService) {
+    public HomeController(AnimalRepository animalRepository, CategoryRepository categoryRepository) {
         this.animalRepository = animalRepository;
         this.categoryRepository = categoryRepository;
-        this.filterService = filterService;
     }
 
     @GetMapping
-    public String home(@RequestParam(required = false) String category, Model model) {
-        if (category != null && !category.equals("Wszystkie")) {
-            List<Animal> filteredAnimals = filterService.filterAnimalsByCategory(category);
-            model.addAttribute("animals", filteredAnimals);
-        } else {
-            model.addAttribute("animals", animalRepository.getAll());
+    public String home(@RequestParam(required = false) String sort, Model model) {
+        List<Animal> animals = animalRepository.getAll();
+        if (sort != null) {
+            Comparator<Animal> comparator = SortTypes.getComparator(sort);
+            Collections.sort(animals, comparator);
         }
+        model.addAttribute("animals", animals);
         model.addAttribute("categories", categoryRepository.getAll());
+        model.addAttribute("chosenCategory", "Zwierzaki");
         return "homePage";
     }
-
 }

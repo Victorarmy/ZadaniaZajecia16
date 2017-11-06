@@ -21,31 +21,34 @@
 		<a th:href="@{/}" th:text="${'Wszystkie'}"> Wszystkie</a>
 	</div>
 	<div class="col-sm-1" th:each="category: ${categories}">
-		<a th:href="${'/?category=' + category}" th:text="${category}"> Wszystkie</a>
+		<a th:href="@{/animal/{category}(category=${category})}" th:text="${category}"> Wszystkie</a>
 	</div>
 </div>
+
+<div style="padding: 20px" th:with="currentUrl=(${#httpServletRequest.requestURI})">
+	<a th:href="@{${currentUrl}(sort=alph)}">Sortuj po nazwie</a>
+</div>
 <div style="padding: 20px">
-	<h3>Zwierzaki szukające domu: </h3>
+	<h3 th:text="${chosenCategory + ' szukające domu'}"/>
 </div>
 
-<p th:if="${!animals.isEmpty()}">
 <p th:each="animal: ${animals}">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-1">
-				<a th:href="${'/animal/' + animal.id}"><img th:src="${animal.imageUrl}" height="60" width="60"/></a>
+				<a th:href="@{/animal/{category}/{id}(id=${animal.id}, category=${animal.category})}"><img th:src="${animal.imageUrl}" height="60" width="60"/></a>
 			</div>
 			<div class="col-sm">
-				<h5><a th:href="${'/animal/' + animal.id}" th:text="${animal.name}"></a></h5>
+				<h5><a th:href="@{/animal/{category}/{id}(id=${animal.id}, category=${animal.category})}" th:text="${animal.name}"></a></h5>
 				<div class="row">
-					<div class="col-sm-2">
-						<a th:href="${'/animal/' + animal.id}"><p th:text="${#strings.abbreviate(animal.description,99)}   "/></a>
+					<div class="col-sm-3">
+						<a th:href="@{/animal/{category}/{id}(id=${animal.id}, category=${animal.category})}"><p th:text="${#strings.abbreviate(animal.description,99)}"/></a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </p>
-</p>
+
 </body>
 </html>

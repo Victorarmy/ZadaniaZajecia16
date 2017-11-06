@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Edit animal</title>
+</head>
+<body>
+<div style="background: #cccc44; padding: 20px;">
+	<h1>Schronisko Reksio i Klakier</h1>
+</div>
+<h6><a th:href="@{/}" th:text="'Powrót do listy'"></a></h6>
+<h4>Edytuj zwierzaka</h4>
+
+<form method="post" th:action="@{/animal/{id}/edit(id={animal.id})}"
+      th:object="${animal}">
+
+	<input type="text" th:value="${animal.name}" name="name" th:field="*{name}"/><br/>
+
+	<textarea th:text="${animal.description}" name="description" th:field="*{description}"/><br/>
+
+	<select th:field="*{category}">
+		<option selected="selected" value=""></option>
+		<option th:each="category: ${categoryList}"
+		        th:value="${category}"
+		        th:text="${category}"></option></select><br/>
+
+	<input th:value="${animal.imageUrl}" type="url" name="zdjecie" th:field="*{imageUrl}"/><br/>
+
+	<input type="submit" value="Zmien"/>
+</form>
+</body>
+</html>
