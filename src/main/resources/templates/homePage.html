@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div style="background: #cccc44; padding: 20px;">
+	<h1>Schronisko Reksio i Klakier</h1>
+</div>
+<div style="padding: 20px">
+<a th:href="@{/animal/addAnimal}">Dodaj zwierzaka</a>
+</div>
+<div class="row" style="padding: 20px">
+	<div class="col-sm-1">
+		Kategorie:
+	</div>
+	<div class="col-sm-1">
+		<a th:href="@{/}" th:text="${'Wszystkie'}"> Wszystkie</a>
+	</div>
+	<div class="col-sm-1" th:each="category: ${categories}">
+		<a th:href="${'/?category=' + category}" th:text="${category}"> Wszystkie</a>
+	</div>
+</div>
+<div style="padding: 20px">
+	<h3>Zwierzaki szukające domu: </h3>
+</div>
+
+<p th:if="${!animals.isEmpty()}">
+<p th:each="animal: ${animals}">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-1">
+				<a th:href="${'/animal/' + animal.id}"><img th:src="${animal.imageUrl}" height="60" width="60"/></a>
+			</div>
+			<div class="col-sm">
+				<h5><a th:href="${'/animal/' + animal.id}" th:text="${animal.name}"></a></h5>
+				<div class="row">
+					<div class="col-sm-2">
+						<a th:href="${'/animal/' + animal.id}"><p th:text="${#strings.abbreviate(animal.description,99)}   "/></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</p>
+</p>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Dodaj zwierzaka</title>
+</head>
+<body>
+<div style="background: #cccc44; padding: 20px;" >
+	<h1>Schronisko Reksio i Klakier</h1>
+</div>
+	<h6><a th:href="@{/}" th:text="'Powrót do listy'"></a></h6>
+
+	<h4>Dodaj zwierzaka do adopcji</h4>
+
+	<form method="post" th:action="@{/animal/addAnimal}"
+	                    th:object="${animal}">
+		<input type="text" placeholder="Imie" name="name" th:field="*{name}"/><br/>
+		<textarea placeholder="Opis" name="description" th:field="*{description}"/><br/>
+		<select th:field="*{category}">
+			<option selected="selected" value="">Wybierz</option>
+			<option th:each="category: ${categoryList}"
+			        th:value="${category}"
+			        th:text="${category}"></option>
+		</select><br/>
+		<input type="url" placeholder="Adres URL" name="zdjecie" th:field="*{imageUrl}"/><br/>
+		<input type="submit" value="Dodaj"/>
+	</form>
+</body>
+</html>
